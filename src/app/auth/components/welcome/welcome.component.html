@@ -1,0 +1,60 @@
+<div>
+    <h2 class="header-title">Welcome to Estimate SoftWare</h2>
+    <mat-horizontal-stepper [linear]="true">
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Fill out your name</ng-template>
+                <mat-form-field>
+                    <input matInput
+                           placeholder="Last name, First name"
+                           [formControl]="firstFormGroup.controls.name"
+                           [matAutocomplete]="auto"
+                           required>
+                    <mat-error *ngIf="firstFormGroup.controls.name.invalid">
+                        Name is required field
+                    </mat-error>
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <div>
+                    <button mat-button  matStepperNext>Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Fill out estimation address</ng-template>
+                <mat-form-field>
+                    <input matInput
+                           placeholder="Address"
+                           [formControl]="secondFormGroup.controls.address"
+                           required>
+                    <mat-error *ngIf="secondFormGroup.controls.address.invalid">
+                        Address is required field
+                    </mat-error>
+                </mat-form-field>
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                    <button mat-button matStepperPrevious>Back</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            <p>
+                Thanks for filling out now you can go to estimation form to continue working.
+            </p>
+            <div>
+                <button mat-raised-button
+                        (click)="registerAddress()"
+                        [color]="'primary'">
+                    Go to Estimation From
+                </button>
+                <button mat-button matStepperPrevious>Back</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>

@@ -1,4 +1,13 @@
-<div id="container">
+<div class="container">
+    <app-welcome (register)="hideForm($event)" *ngIf="!isAuthenticated"></app-welcome>
+    <div style="overflow: hidden;" *ngIf="isAuthenticated">
+        <mat-toolbar-row>
+            <span>Toolbar</span>
+            <span class="example-spacer"></span>
+            <button style="float: right" [color]="'primary'" mat-raised-button (click)="logout()">Logout</button>
+        </mat-toolbar-row>
+    </div>
 
+    <router-outlet></router-outlet>
 </div>
 
