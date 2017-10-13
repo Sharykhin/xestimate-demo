@@ -6,7 +6,9 @@ import { DefaultUserFactory } from './factories/user/default-user.factory';
 
 @NgModule({
     declarations: [],
-    imports: [],
+    imports: [
+
+    ],
     providers: [
         {
             provide: AuthService,

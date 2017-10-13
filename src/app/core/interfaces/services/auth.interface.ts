@@ -1,6 +1,6 @@
 import { UserModel } from '../../models/user.model';
 import { UserRequest } from '../requests/user.request';
-import {Observable} from "rxjs";
+import { Observable } from 'rxjs/Observable';
 
 export interface AuthInterface {
 

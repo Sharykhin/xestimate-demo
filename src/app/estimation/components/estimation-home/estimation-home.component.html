@@ -1,5 +1,8 @@
 <div>
-    <h2>Estimation Form</h2>
+    <div class="header-wrapper">
+        <span class="header">Estimation Form:</span>
+        <span class="date-field">Today is {{ todayDate | date:'MMM d, y' }}</span>
+    </div>
     <div>
         <router-outlet></router-outlet>
     </div>

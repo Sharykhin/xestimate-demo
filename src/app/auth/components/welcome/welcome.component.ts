@@ -19,9 +19,10 @@ export class WelcomeComponent implements OnInit {
     firstFormGroup: FormGroup;
     secondFormGroup: FormGroup;
     options = [
-        'One',
-        'Two',
-        'Three'
+        'Ronnie',
+        'Eero',
+        'Jean',
+        'Erika',
     ];
 
     filteredOptions: Observable<string[]>;

@@ -1,8 +1,8 @@
 <div class="container">
     <app-welcome (register)="hideForm($event)" *ngIf="!isAuthenticated"></app-welcome>
-    <div style="overflow: hidden;" *ngIf="isAuthenticated">
+    <div style="overflow: hidden;padding: 5px;border-bottom: 1px solid #ccc;" *ngIf="isAuthenticated">
         <mat-toolbar-row>
-            <span>Toolbar</span>
+            <span style="font-size: 25px;color: #777676;">Toolbar</span>
             <span class="example-spacer"></span>
             <button style="float: right" [color]="'primary'" mat-raised-button (click)="logout()">Logout</button>
         </mat-toolbar-row>
