@@ -1,0 +1,84 @@
+<div class="example-container">
+    <form [formGroup]="itemForm" novalidate (ngSubmit)="onSubmit(itemForm.value)">
+        <mat-form-field>
+            <input type="text"
+                   placeholder="Enter Item category"
+                   name="category"
+                   #input
+                   min="3"
+                   matInput
+                   required
+                   [formControl]="itemForm.controls.category">
+            <mat-hint align="end">Max 3 characters</mat-hint>
+            <mat-error *ngIf="itemForm.controls.category.invalid && submitted">
+                You must enter a value
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput
+                   type="text"
+                   name="selector"
+                   placeholder="Enter Item Selector"
+                   required
+                   [formControl]="itemForm.controls.selector">
+            <mat-error *ngIf="itemForm.controls.selector.invalid && submitted">
+                You must enter a value
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput
+                   type="text"
+                   name="description"
+                   placeholder="Enter Item Description"
+                   required
+                   [formControl]="itemForm.controls.description">
+            <mat-hint align="end">Max 250 characters</mat-hint>
+            <mat-error *ngIf="itemForm.controls.description.invalid && submitted">
+                You must enter a value
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select
+                    placeholder="Enter Unit type"
+                    required
+                    [formControl]="itemForm.controls.unitType">
+                <mat-option value="sf">SF</mat-option>
+                <mat-option value="ea">EA</mat-option>
+                <mat-option value="lf">LF</mat-option>
+            </mat-select>
+            <mat-hint align="end">Use one of unit measure</mat-hint>
+            <mat-error *ngIf="itemForm.controls.unitType.invalid && submitted">
+                You must select a value
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput
+                   name="units"
+                   type="number"
+                   placeholder="Enter Units"
+                   required
+                   [formControl]="itemForm.controls.units">
+            <mat-error *ngIf="itemForm.controls.units.invalid && submitted">
+                You must enter a value
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput
+                   placeholder="Enter Cost"
+                   type="number"
+                   required
+                   [formControl]="itemForm.controls.cost">
+            <mat-error *ngIf="itemForm.controls.cost.invalid && submitted">
+                You must enter a value
+            </mat-error>
+            <span matPrefix>$&nbsp;</span>
+        </mat-form-field>
+
+        <button style="margin-top: 40px" mat-raised-button [color]="'primary'">Submit</button>
+    </form>
+</div>

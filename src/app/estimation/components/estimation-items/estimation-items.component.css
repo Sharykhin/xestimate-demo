@@ -1,8 +1,8 @@
-.example-container {
-    display: flex;
-    flex-direction: column;
+.item-list .spinner {
+    width: 100px;
+    margin: 20px auto 0;
 }
 
-.example-container form > * {
-    width: 100%;
+.item-list .list {
+    margin-top: 50px;
 }

@@ -1,37 +1,49 @@
-<div class="example-container">
-    <form>
-        <mat-form-field>
-            <input matInput type="text" placeholder="Enter Item category" min="3">
-            <mat-hint align="end">Max 3 characters</mat-hint>
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput type="text" placeholder="Enter Item Selector">
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput type="text" placeholder="Enter Item Description">
-            <mat-hint align="end">Max 250 characters</mat-hint>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-select placeholder="Enter Unit type">
-                <mat-option value="option">SF</mat-option>
-                <mat-option value="option">EA</mat-option>
-                <mat-option value="option">LF</mat-option>
-            </mat-select>
-            <mat-hint align="end">Use one of unit measure</mat-hint>
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput type="number" placeholder="Enter Units">
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput placeholder="Enter Cost" type="number">
-            <span matPrefix>$&nbsp;</span>
-        </mat-form-field>
-
-        <button style="margin-top: 40px" mat-raised-button [color]="'primary'">Submit</button>
-    </form>
+<div class="item-list">
+    <app-estimation-item-form (onSave)="addItem($event)"></app-estimation-item-form>
+    <div class="spinner" *ngIf="showSpinner">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="list fixed-table-container">
+        <h2 *ngIf="items.length === 0">There are no items yet.</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>
+                        Category
+                    </td>
+                    <td>
+                        Selector
+                    </td>
+                    <td>
+                        Description
+                    </td>
+                    <td>
+                        Units
+                    </td>
+                    <td>
+                        Cost
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of items">
+                    <td>
+                        {{ item.category }}
+                    </td>
+                    <td>
+                        {{ item.selector }}
+                    </td>
+                    <td>
+                        {{ item.description }}
+                    </td>
+                    <td>
+                        {{ item.units }} {{ item.unitType }}
+                    </td>
+                    <td>
+                        {{ item.cost }}$ per {{ item.unitType }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
