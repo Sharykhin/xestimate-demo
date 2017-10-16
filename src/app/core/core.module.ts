@@ -7,6 +7,7 @@ import { AppValidators } from './services/validators';
 import { DefaultEstimationItemFacotry } from './factories/item/default-estimation-item.factory';
 import { EstimationItemFactory, ApiEstimationItemService } from './providers';
 import { LocalStorageApiEstimationItem } from './services/api/local-storage-api-estimation-item.service';
+import { CoreDispatcher } from './services/core-dispatcher';
 
 @NgModule({
     declarations: [],
@@ -30,7 +31,8 @@ import { LocalStorageApiEstimationItem } from './services/api/local-storage-api-
         {
             provide: ApiEstimationItemService,
             useClass: LocalStorageApiEstimationItem
-        }
+        },
+        CoreDispatcher
     ],
     bootstrap: []
 })

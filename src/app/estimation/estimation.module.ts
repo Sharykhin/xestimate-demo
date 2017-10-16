@@ -8,7 +8,7 @@ import { PreventAccessGuard } from './guards/prevent-access.guard';
 import { EstimationItemsComponent } from './components/estimation-items/estimation-items.component';
 import {
     MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule, MatProgressBarModule
 } from '@angular/material';
 import { EstimationItemFormComponent } from './components/estimation-item-form/estimation-item-form.component';
 
@@ -19,7 +19,7 @@ import { EstimationItemFormComponent } from './components/estimation-item-form/e
     ],
     imports: [
         routing, CommonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatButtonModule,
-        ReactiveFormsModule, MatProgressSpinnerModule
+        ReactiveFormsModule, MatProgressSpinnerModule, MatProgressBarModule
     ],
     providers: [
         PreventAccessGuard
