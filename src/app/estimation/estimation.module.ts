@@ -8,22 +8,23 @@ import { PreventAccessGuard } from './guards/prevent-access.guard';
 import { EstimationItemsComponent } from './components/estimation-items/estimation-items.component';
 import {
     MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatButtonModule,
-    MatProgressSpinnerModule, MatProgressBarModule
+    MatProgressSpinnerModule, MatProgressBarModule, MatDialogModule
 } from '@angular/material';
 import { EstimationItemFormComponent } from './components/estimation-item-form/estimation-item-form.component';
+import { ModalRemoveEstimateComponent } from './components/modals/remove-estimate/remove-estimate.component';
 
 
 @NgModule({
     declarations: [
-        EstimationHomeComponent, EstimationItemsComponent, EstimationItemFormComponent
+        EstimationHomeComponent, EstimationItemsComponent, EstimationItemFormComponent, ModalRemoveEstimateComponent
     ],
     imports: [
         routing, CommonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatButtonModule,
-        ReactiveFormsModule, MatProgressSpinnerModule, MatProgressBarModule
+        ReactiveFormsModule, MatProgressSpinnerModule, MatProgressBarModule, MatDialogModule
     ],
     providers: [
         PreventAccessGuard
     ],
-    bootstrap: []
+    bootstrap: [ ModalRemoveEstimateComponent ]
 })
 export class EstimationModule {}

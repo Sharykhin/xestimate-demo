@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewContainerRef } from '@angular/core';
 import { AuthService } from './core/providers/core.provider';
 import { AuthInterface } from './core/interfaces/services/auth.interface';
-import {UserModel} from "./core/models/user.model";
-import {Router} from "@angular/router";
+import { UserModel } from './core/models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +16,7 @@ export class AppComponent implements OnInit {
   constructor(
       @Inject(AuthService) private authService: AuthInterface,
       @Inject(Router) private router: Router
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.checkAuth();

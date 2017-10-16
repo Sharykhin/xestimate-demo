@@ -1,13 +1,13 @@
-import {} from '@angular/core';
+import { Injectable } from '@angular/core';
 
+import { DispatcherInterface } from "../interfaces/dispatcher.interface";
 
-export class CoreDispatcher {
-
-    public static FILE_MATERIALS_UPLOADED;
+@Injectable()
+export class CoreDispatcher implements DispatcherInterface {
 
     private listeners = {};
 
-    on(event: string, callback: (data: any) => void) {
+    on(event: string, callback: (data: any) => void): () => void {
 
         if (!this.listeners.hasOwnProperty(event)) {
             this.listeners[event] = [];

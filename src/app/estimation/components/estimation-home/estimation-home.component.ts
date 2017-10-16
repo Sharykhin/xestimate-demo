@@ -1,5 +1,7 @@
-import {Component, OnInit, ViewChildren, Inject} from '@angular/core';
-import {CoreDispatcher} from "../../../core/services/core-dispatcher";
+import { Component, OnInit, ViewChildren, Inject} from '@angular/core';
+import { DispatcherInterface } from '../../../core/interfaces/dispatcher.interface';
+import { Dispatcher } from '../../../core/providers';
+import { EVENTS } from '../../../core/services/events'
 
 @Component({
     selector: 'app-estimation-home',
@@ -15,7 +17,7 @@ export class EstimationHomeComponent implements OnInit {
     @ViewChildren('fileInput') fi;
 
     constructor(
-        @Inject(CoreDispatcher) private dispatcher: CoreDispatcher
+        @Inject(Dispatcher) private dispatcher: DispatcherInterface
     ) {}
 
     ngOnInit() {
@@ -29,6 +31,7 @@ export class EstimationHomeComponent implements OnInit {
     uploadFile(): void {
         const file = this.fi.first.nativeElement.files[0];
         this.uploadingFile = true;
+        // Simulate uploading process
         setTimeout(() => {
             this.uploadValue = 50;
             setTimeout(() => {
@@ -42,7 +45,8 @@ export class EstimationHomeComponent implements OnInit {
     }
 
     private uploadCallback() {
-        this.dispatcher.dispatch(CoreDispatcher.FILE_MATERIALS_UPLOADED, [
+        // Upload mock data
+        this.dispatcher.dispatch(EVENTS.FILE_MATERIALS_UPLOADED, [
             {
                 category: 'CAB',
                 selector: 'CTFL+',

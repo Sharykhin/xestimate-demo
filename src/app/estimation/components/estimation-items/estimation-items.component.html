@@ -5,8 +5,8 @@
     </div>
     <div class="list fixed-table-container">
         <h2>Material List</h2>
-        <h2 *ngIf="items.length === 0">There are no items yet.</h2>
-        <table class="table table-striped">
+        <h3 *ngIf="items.length === 0">There are no items yet.</h3>
+        <table class="table table-striped"  *ngIf="items.length > 0">
             <thead>
                 <tr>
                     <td>
@@ -24,10 +24,13 @@
                     <td>
                         Cost
                     </td>
+                    <td>
+
+                    </td>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of items">
+                <tr *ngFor="let item of items; let i = index">
                     <td>
                         {{ item.category }}
                     </td>
@@ -42,6 +45,10 @@
                     </td>
                     <td>
                         {{ item.cost }}$ per {{ item.unitType }}
+                    </td>
+                    <td>
+                        <button (click)="edit(item)" mat-button>Edit</button>
+                        <button (click)="remove(item, i)" mat-button [color]="'warn'">Remove</button>
                     </td>
                 </tr>
             </tbody>
