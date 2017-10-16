@@ -1,34 +1,42 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject, ViewChildren, AfterViewInit } from '@angular/core';
+import {
+    Component, OnInit, Input, Output, EventEmitter, Inject, ViewChildren, AfterViewInit,
+    OnDestroy
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { EstimationItemModel } from '../../../core/models/estimation-item.model';
 import { EstimationItemRequest } from '../../../core/interfaces/requests/estimation-item.request';
 import { AppValidators } from '../../../core/services/validators';
-import { EstimationItemFactory, ApiEstimationItemService } from '../../../core/providers';
+import { EstimationItemFactory, ApiEstimationItemService, Dispatcher } from '../../../core/providers';
 import { EstimationItemFactoryInterface } from '../../../core/interfaces/factories/estimation-item-factory.interface';
 import { ApiEstimationItemInterface } from '../../../core/interfaces/services/api-estimation-item.interface';
+import { DispatcherInterface } from '../../../core/interfaces/dispatcher.interface';
+import {EVENTS} from "../../../core/services/events";
 
 @Component({
     selector: 'app-estimation-item-form',
     templateUrl: './estimation-item-form.component.html',
     styleUrls: ['./estimation-item-form.component.css']
 })
-export class EstimationItemFormComponent implements OnInit, AfterViewInit {
+export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @Input() item: EstimationItemModel;
     @Output() onSave = new EventEmitter<EstimationItemModel>();
+    @Output() onEdit = new EventEmitter<EstimationItemModel>();
 
     @ViewChildren('input') vc;
 
     public itemForm: FormGroup;
     private isNew: boolean;
     public submitted = false;
+    private removeListener;
 
     constructor(
         @Inject(FormBuilder) private formBuilder: FormBuilder,
         @Inject(AppValidators) private validators: AppValidators,
         @Inject(EstimationItemFactory) private itemFactory: EstimationItemFactoryInterface,
-        @Inject(ApiEstimationItemService) private apiItem: ApiEstimationItemInterface
+        @Inject(ApiEstimationItemService) private apiItem: ApiEstimationItemInterface,
+        @Inject(Dispatcher) private dispatcher: DispatcherInterface
     ) {}
 
     ngOnInit() {
@@ -41,6 +49,23 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit {
         } else {
             this.isNew = false;
         }
+
+        this.removeListener = this.dispatcher.on(EVENTS.EDIT_ITEM, (item: EstimationItemModel) => {
+            this.item = item;
+            this.itemForm.setValue({
+                category: item.category,
+                selector: item.selector,
+                description: item.description,
+                unitType: item.unitType,
+                units: item.units,
+                cost: item.cost
+            });
+            this.isNew = false;
+        });
+    }
+
+    ngOnDestroy() {
+        this.removeListener();
     }
 
     ngAfterViewInit() {
@@ -62,16 +87,33 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit {
         this.item.units = values.units;
         this.item.cost = values.cost;
 
-        this.apiItem.save(this.item)
+        this.apiItem.save(this.item, this.isNew)
             .subscribe(() => {
-                this.onSave.emit(this.item);
+                if (this.isNew) {
+                    this.onSave.emit(this.item);
+                } else {
+                    this.onEdit.emit(this.item);
+                }
                 this.itemForm.markAsPending();
                 this.itemForm.markAsUntouched();
                 this.resetForm();
                 this.submitted = false;
                 this.item = this.itemFactory.createItem({});
-                this.vc.first.nativeElement.focus();
+                if (this.isNew) {
+                    this.vc.first.nativeElement.focus();
+                }
+
+                this.isNew = true;
             });
+    }
+
+    cancel(): void {
+        this.itemForm.markAsPending();
+        this.itemForm.markAsUntouched();
+        this.resetForm();
+        this.submitted = false;
+        this.item = this.itemFactory.createItem({});
+        this.isNew = true;
     }
 
     private buildForm(): void {

@@ -12,11 +12,13 @@ import {
 } from '@angular/material';
 import { EstimationItemFormComponent } from './components/estimation-item-form/estimation-item-form.component';
 import { ModalRemoveEstimateComponent } from './components/modals/remove-estimate/remove-estimate.component';
+import { ModalProcessEstimateComponent } from './components/modals/process-estimate/process-estimate.component';
 
 
 @NgModule({
     declarations: [
-        EstimationHomeComponent, EstimationItemsComponent, EstimationItemFormComponent, ModalRemoveEstimateComponent
+        EstimationHomeComponent, EstimationItemsComponent, EstimationItemFormComponent, ModalRemoveEstimateComponent,
+        ModalProcessEstimateComponent
     ],
     imports: [
         routing, CommonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatButtonModule,
@@ -25,6 +27,6 @@ import { ModalRemoveEstimateComponent } from './components/modals/remove-estimat
     providers: [
         PreventAccessGuard
     ],
-    bootstrap: [ ModalRemoveEstimateComponent ]
+    bootstrap: [ ModalRemoveEstimateComponent, ModalProcessEstimateComponent ]
 })
 export class EstimationModule {}

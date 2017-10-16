@@ -20,7 +20,7 @@ export class CoreDispatcher implements DispatcherInterface {
         }
     }
 
-    dispatch(event: string, data: any): void {
+    dispatch(event: string, data?: any): void {
         if (!this.listeners.hasOwnProperty(event)) {
             this.listeners[event] = [];
         }

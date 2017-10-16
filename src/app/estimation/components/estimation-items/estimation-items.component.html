@@ -1,10 +1,18 @@
 <div class="item-list">
-    <app-estimation-item-form (onSave)="addItem($event)"></app-estimation-item-form>
+    <app-estimation-item-form (onEdit)="editItem($event)" (onSave)="addItem($event)"></app-estimation-item-form>
     <div class="spinner" *ngIf="showSpinner">
         <mat-spinner></mat-spinner>
     </div>
     <div class="list fixed-table-container">
-        <h2>Material List</h2>
+        <div>
+            <h2 class="list-title">Material List
+                <sub>
+                    After compliting filling out all the items, please press to "Process Materials" to find specific items from suppliers.
+                </sub>
+            </h2>
+            <button (click)="process()" mat-raised-button [color]="'primary'">Process Materials</button>
+        </div>
+
         <h3 *ngIf="items.length === 0">There are no items yet.</h3>
         <table class="table table-striped"  *ngIf="items.length > 0">
             <thead>

@@ -28,13 +28,35 @@ export class LocalStorageApiEstimationItem implements ApiEstimationItemInterface
         });
     }
 
-    save(item: EstimationItemModel): Observable<boolean> {
+    save(item: EstimationItemModel, isNew: boolean): Observable<boolean> {
         return new Observable((observer: Observer<any>) => {
             let items = window.localStorage.getItem(this.ITEMS_KEY);
             let itemsArray = items !== null ? JSON.parse(items) : [];
-            itemsArray.push(item);
+            if (isNew) {
+                itemsArray.push(item);
+            } else {
+                itemsArray.forEach((itemToCheck, i) => {
+                    if (itemToCheck.id === item.id) {
+                        itemsArray[i] = item;
+                    }
+                });
+            }
             window.localStorage.setItem(this.ITEMS_KEY, JSON.stringify(itemsArray));
             observer.next(true);
-        })
+        });
+    }
+
+    remove(item: EstimationItemModel): Observable<boolean> {
+        return new Observable((observer: Observer<any>) => {
+            let items = window.localStorage.getItem(this.ITEMS_KEY);
+            let itemsArray = items !== null ? JSON.parse(items) : [];
+            itemsArray.forEach((itemToCheck, i) => {
+                if (itemToCheck.id === item.id) {
+                    itemsArray.splice(i, 1);
+                }
+            });
+            window.localStorage.setItem(this.ITEMS_KEY, JSON.stringify(itemsArray));
+            observer.next(true);
+        });
     }
 }

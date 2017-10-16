@@ -3,6 +3,12 @@
     margin: 20px auto 0;
 }
 
+.list-title sub {
+    font-size: 14px;
+    color: #6b6868;
+}
+
 .item-list .list {
     margin-top: 50px;
+    margin-bottom: 150px;
 }
