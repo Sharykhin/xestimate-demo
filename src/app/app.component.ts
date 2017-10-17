@@ -21,7 +21,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.checkAuth();
     if (this.isAuthenticated) {
-      this.router.navigate(['/estimation']);
+      if (window.location.pathname === '/') {
+        this.router.navigate(['/estimation']);
+      }
     }
   }
 

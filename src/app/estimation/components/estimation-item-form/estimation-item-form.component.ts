@@ -1,6 +1,6 @@
 import {
     Component, OnInit, Input, Output, EventEmitter, Inject, ViewChildren, AfterViewInit,
-    OnDestroy
+    OnDestroy, ViewChild
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -25,6 +25,7 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
     @Output() onEdit = new EventEmitter<EstimationItemModel>();
 
     @ViewChildren('input') vc;
+    @ViewChild('formView') formView;
 
     public itemForm: FormGroup;
     private isNew: boolean;
@@ -69,7 +70,8 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
     }
 
     ngAfterViewInit() {
-        // This hack fix bug with ExpressionChange Error
+        //TODO: This hack fix bug with ExpressionChange Error.It looks lkie
+        // EstimationItemFormComponent.html:3 ERROR Error: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'
         setTimeout(() => {
             this.vc.first.nativeElement.focus();
         }, 0);
@@ -94,15 +96,12 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
                 } else {
                     this.onEdit.emit(this.item);
                 }
-                this.itemForm.markAsPending();
-                this.itemForm.markAsUntouched();
                 this.resetForm();
                 this.submitted = false;
                 this.item = this.itemFactory.createItem({});
                 if (this.isNew) {
                     this.vc.first.nativeElement.focus();
                 }
-
                 this.isNew = true;
             });
     }
@@ -136,5 +135,9 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
             this.itemForm.controls[name].setValue('');
             this.itemForm.controls[name].markAsUntouched();
         }
+
+        this.formView.nativeElement.querySelectorAll('mat-form-field').forEach((formElement) => {
+            formElement.classList.remove('mat-form-field-invalid');
+        });
     }
 }

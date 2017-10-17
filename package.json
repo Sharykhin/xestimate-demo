@@ -23,10 +23,14 @@
     "@angular/platform-browser": "^4.2.4",
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
+    "@types/xlsx": "0.0.36",
+    "alasql": "^0.4.3",
     "core-js": "^2.4.1",
+    "file-saver": "^1.3.3",
     "materialize-grid-list": "^1.0.3",
     "ng2-toastr": "^4.1.2",
     "rxjs": "^5.4.2",
+    "xlsx": "^0.11.6",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

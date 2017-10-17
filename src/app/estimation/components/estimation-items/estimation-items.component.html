@@ -1,3 +1,14 @@
+<div class="header-wrapper">
+    <span class="header">Estimation Form:</span>
+    <span class="date-field">Today is {{ todayDate | date:'MMM d, y' }}</span>
+    <div class="upload-block">
+            <span>
+                Or upload XLSX file:
+                <button (click)="openFileUpload()" mat-raised-button>Upload XLSX File</button>
+                <input (change)="uploadFile()" type="file" #fileInput accept=".xlsx, .xls" name="marerialList" style="display: none" />
+            </span>
+    </div>
+</div>
 <div class="item-list">
     <app-estimation-item-form (onEdit)="editItem($event)" (onSave)="addItem($event)"></app-estimation-item-form>
     <div class="spinner" *ngIf="showSpinner">
@@ -61,5 +72,11 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
+<div class="spinner-background" *ngIf="uploadingFile">
+    <div class="progress-bar-block">
+        <mat-progress-bar [mode]="'determinate'" [value]="uploadValue"></mat-progress-bar>
+        <span>Uploading...</span>
     </div>
 </div>

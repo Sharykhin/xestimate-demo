@@ -1,4 +1,4 @@
-import {Observable} from "rxjs";
+import { Observable } from 'rxjs/Observable';
 
 import {EstimationItemModel} from "../../models/estimation-item.model";
 

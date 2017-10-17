@@ -1,0 +1,86 @@
+<div>
+    <div>
+        <button mat-raised-button (click)="back()">Back</button>
+    </div>
+    <h3>Select appropriate supplier for each item</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>
+                Category
+            </td>
+            <td>
+                Selector
+            </td>
+            <td>
+                Description
+            </td>
+            <td>
+                Supplier
+            </td>
+            <td>
+                Final cost
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items; let i = index">
+                <td>
+                    {{ item.category }}
+                </td>
+                <td>
+                    {{ item.selector }}
+                </td>
+                <td>
+                    {{ item.description }}
+                </td>
+                <td>
+                    <mat-form-field>
+                        <mat-select placeholder="Select" name="supplier[]" #name="ngModel" (change)="applySuplier(suppliers[i], i, item)" required [(ngModel)]="suppliers[i]">
+                            <mat-option value="homedepot">{{ item.description }} in Home Depot</mat-option>
+                            <mat-option value="lowers">{{ item.description }} in Lowers</mat-option>
+                            <mat-option value="menards">{{ item.description }} in Menards</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="name.invalid">
+                            Please select one of the supplier
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    {{ calculateCost(suppliers[i], item)}} <span *ngIf="suppliers[i]">$</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+
+        <div>
+            <form>
+                <mat-checkbox name="agreement" [required]="true" (change)="checkTermsAndConditions($event)">
+                    Agree with terms & conditions.
+                </mat-checkbox>
+                <mat-radio-group>
+                    <mat-radio-button name="typeConvert"
+                                      value="pdf"
+                                      ngDefaultControl
+                                      [(ngModel)]="typeConvert">
+                        PDF
+                    </mat-radio-button>
+                    <mat-radio-button name="typeConvert"
+                                      checked="true"
+                                      [(ngModel)]="typeConvert"
+                                      ngDefaultControl
+                                      value="xlsx">
+                        XLSX
+                    </mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="submit === true && checkedTerms === false">
+                    Please apply terms & conditions.
+                </mat-error>
+            </form>
+        </div>
+        <div class="convert-control">
+            <button (click)="convert()" mat-raised-button [color]="'primary'">Download Final Report</button>
+        </div>
+    </div>
+</div>

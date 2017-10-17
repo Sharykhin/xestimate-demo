@@ -1,5 +1,5 @@
 <div class="example-container">
-    <form [formGroup]="itemForm" novalidate (ngSubmit)="onSubmit(itemForm.value)">
+    <form class="item-form js-item-form" [formGroup]="itemForm" novalidate (ngSubmit)="onSubmit(itemForm.value)" #formView>
         <mat-form-field>
             <input type="text"
                    placeholder="Enter Item category"

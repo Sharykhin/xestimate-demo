@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs';
 
 import { EstimationItemModel } from '../../models/estimation-item.model';
 import { EstimationItemRequest } from '../../interfaces/requests/estimation-item.request';
@@ -25,6 +26,7 @@ export class LocalStorageApiEstimationItem implements ApiEstimationItemInterface
             });
 
             observer.next(itemsArray);
+            observer.complete();
         });
     }
 
@@ -43,6 +45,7 @@ export class LocalStorageApiEstimationItem implements ApiEstimationItemInterface
             }
             window.localStorage.setItem(this.ITEMS_KEY, JSON.stringify(itemsArray));
             observer.next(true);
+            observer.complete();
         });
     }
 
@@ -57,6 +60,7 @@ export class LocalStorageApiEstimationItem implements ApiEstimationItemInterface
             });
             window.localStorage.setItem(this.ITEMS_KEY, JSON.stringify(itemsArray));
             observer.next(true);
+            observer.complete();
         });
     }
 }
