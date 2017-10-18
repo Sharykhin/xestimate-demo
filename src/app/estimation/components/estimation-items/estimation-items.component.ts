@@ -19,9 +19,9 @@ import { ModalProcessEstimateComponent } from '../modals/process-estimate/proces
 export class EstimationItemsComponent implements OnInit, OnDestroy {
 
     public items: EstimationItemModel[];
-    public showSpinner = true;
+    public showSpinner: boolean = true;
     public todayDate: Date;
-    private listener;
+    private listener: () => void;
 
     constructor(
         @Inject(ApiEstimationItemService) private apiItem: ApiEstimationItemInterface,
@@ -50,7 +50,8 @@ export class EstimationItemsComponent implements OnInit, OnDestroy {
             });
 
             this.toastr.success('Two items were uploaded!', 'Success!', {
-                dismiss: 'click'
+                dismiss: 'click',
+                toastLife: 3000
             });
         });
     }
@@ -62,13 +63,15 @@ export class EstimationItemsComponent implements OnInit, OnDestroy {
     addItem(item: EstimationItemModel): void {
         this.items.push(item);
         this.toastr.success('A new item has been added!', 'Success!', {
-            dismiss: 'click'
+            dismiss: 'click',
+            toastLife: 3000
         });
     }
 
     editItem(item: EstimationItemModel) {
         this.toastr.success('Item has been edited!', 'Success!', {
-            dismiss: 'click'
+            dismiss: 'click',
+            toastLife: 3000
         });
     }
 

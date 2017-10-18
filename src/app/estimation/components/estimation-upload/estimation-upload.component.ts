@@ -1,5 +1,6 @@
 import { Component, ViewChild, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 
 import { EstimationItemFactory, ApiEstimationItemService, Dispatcher } from '../../../core/providers';
 import { EstimationItemFactoryInterface } from '../../../core/interfaces/factories/estimation-item-factory.interface';

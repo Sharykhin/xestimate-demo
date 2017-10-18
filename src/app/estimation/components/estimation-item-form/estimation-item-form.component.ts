@@ -20,6 +20,7 @@ import { EVENTS } from '../../../core/services/events';
 })
 export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
+    // TODO: it would work if form is used on separate page, but not with the list
     @Input() item: EstimationItemModel;
     @Output() onSave = new EventEmitter<EstimationItemModel>();
     @Output() onEdit = new EventEmitter<EstimationItemModel>();
@@ -29,8 +30,8 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
 
     public itemForm: FormGroup;
     public isNew: boolean;
-    public submitted = false;
-    private removeListener;
+    public submitted: boolean = false;
+    private removeListener: () => void;
 
     constructor(
         @Inject(FormBuilder) private formBuilder: FormBuilder,
