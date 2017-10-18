@@ -1,13 +1,13 @@
-import {Component, Inject, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, Inject, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
 
-import { AuthService } from "../../../core/providers/core.provider";
-import { AuthInterface } from "../../../core/interfaces/services/auth.interface";
-import { Router } from "@angular/router";
-import { UserModel } from "../../../core/models/user.model";
+import { AuthService } from '../../../core/providers';
+import { AuthInterface } from '../../../core/interfaces/services/auth.interface';
+import { UserModel } from '../../../core/models/user.model';
 
 @Component({
     selector: 'app-welcome',
@@ -16,18 +16,19 @@ import { UserModel } from "../../../core/models/user.model";
 })
 export class WelcomeComponent implements OnInit {
 
-    firstFormGroup: FormGroup;
-    secondFormGroup: FormGroup;
-    options = [
+    public firstFormGroup: FormGroup;
+    public secondFormGroup: FormGroup;
+    private options = [
         'Ronnie',
         'Eero',
         'Jean',
         'Erika',
     ];
 
-    filteredOptions: Observable<string[]>;
+    public filteredOptions: Observable<string[]>;
 
     @Output() register = new EventEmitter<UserModel>();
+    @ViewChild('addressInput') addressInput;
 
     constructor(
         @Inject(FormBuilder) private formBuilder: FormBuilder,
@@ -50,6 +51,14 @@ export class WelcomeComponent implements OnInit {
             .startWith(null)
             .map(val => val ? this.filter(val) : this.options.slice());
 
+    }
+
+    addFocus() {
+        // After view is changed with animation effect. we need to focus.
+        // BUG: Material doesn't provide some callbacks of next or previous steps
+        setTimeout(() => {
+            this.addressInput.nativeElement.focus();
+        }, 300);
     }
 
     registerAddress() {

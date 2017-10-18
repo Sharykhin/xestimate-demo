@@ -11,7 +11,7 @@ import { EstimationItemFactory, ApiEstimationItemService, Dispatcher } from '../
 import { EstimationItemFactoryInterface } from '../../../core/interfaces/factories/estimation-item-factory.interface';
 import { ApiEstimationItemInterface } from '../../../core/interfaces/services/api-estimation-item.interface';
 import { DispatcherInterface } from '../../../core/interfaces/dispatcher.interface';
-import {EVENTS} from "../../../core/services/events";
+import { EVENTS } from '../../../core/services/events';
 
 @Component({
     selector: 'app-estimation-item-form',
@@ -28,7 +28,7 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
     @ViewChild('formView') formView;
 
     public itemForm: FormGroup;
-    private isNew: boolean;
+    public isNew: boolean;
     public submitted = false;
     private removeListener;
 
@@ -70,8 +70,10 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
     }
 
     ngAfterViewInit() {
-        //TODO: This hack fix bug with ExpressionChange Error.It looks lkie
-        // EstimationItemFormComponent.html:3 ERROR Error: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'
+        // TODO: This hack fix bug with ExpressionChange Error.It looks lkie
+        // EstimationItemFormComponent.html:3
+        // ERROR Error: ExpressionChangedAfterItHasBeenCheckedError:
+        // Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'
         setTimeout(() => {
             this.vc.first.nativeElement.focus();
         }, 0);
@@ -130,14 +132,18 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
     }
 
     private resetForm() {
-        for (let name in this.itemForm.controls) {
-            this.itemForm.controls[name].setErrors(null);
-            this.itemForm.controls[name].setValue('');
-            this.itemForm.controls[name].markAsUntouched();
+        for (const name in this.itemForm.controls) {
+            if (this.itemForm.controls.hasOwnProperty(name)) {
+                this.itemForm.controls[name].setErrors(null);
+                this.itemForm.controls[name].setValue('');
+                this.itemForm.controls[name].markAsUntouched();
+            }
         }
 
-        this.formView.nativeElement.querySelectorAll('mat-form-field').forEach((formElement) => {
-            formElement.classList.remove('mat-form-field-invalid');
+        setTimeout(() => {
+            this.formView.nativeElement.querySelectorAll('mat-form-field').forEach((formElement) => {
+                formElement.classList.remove('mat-form-field-invalid');
+            });
         });
     }
 }

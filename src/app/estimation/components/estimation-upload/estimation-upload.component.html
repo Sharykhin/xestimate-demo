@@ -1,0 +1,9 @@
+<button (click)="openFileUpload()" mat-raised-button>Upload XLSX File</button>
+<input (change)="uploadFile()" type="file" #fileUpload accept=".xlsx, .xls" name="marerialList" />
+
+<div class="spinner-background" *ngIf="uploadingFile">
+    <div class="progress-bar-block">
+        <mat-progress-bar [mode]="'determinate'" [value]="uploadValue"></mat-progress-bar>
+        <span>Uploading...</span>
+    </div>
+</div>

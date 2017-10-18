@@ -3,7 +3,7 @@
         <button mat-raised-button (click)="back()">Back</button>
     </div>
     <h3>Select appropriate supplier for each item</h3>
-    <table class="table table-striped">
+    <table class="table table-striped" >
         <thead>
         <tr>
             <td>
@@ -36,14 +36,11 @@
                 </td>
                 <td>
                     <mat-form-field>
-                        <mat-select placeholder="Select" name="supplier[]" #name="ngModel" (change)="applySuplier(suppliers[i], i, item)" required [(ngModel)]="suppliers[i]">
-                            <mat-option value="homedepot">{{ item.description }} in Home Depot</mat-option>
-                            <mat-option value="lowers">{{ item.description }} in Lowers</mat-option>
-                            <mat-option value="menards">{{ item.description }} in Menards</mat-option>
+                        <mat-select placeholder="Select" name="supplier[]" (change)="applySuplier(suppliers[i], i, item)" required [(ngModel)]="suppliers[i]">
+                            <mat-option value="homedepot">In Home Depot</mat-option>
+                            <mat-option value="lowers">In Lowers </mat-option>
+                            <mat-option value="menards">In Menards</mat-option>
                         </mat-select>
-                        <mat-error *ngIf="name.invalid">
-                            Please select one of the supplier
-                        </mat-error>
                     </mat-form-field>
                 </td>
                 <td>
@@ -52,6 +49,7 @@
             </tr>
         </tbody>
     </table>
+
     <div>
 
         <div>

@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit, ViewContainerRef } from '@angular/core';
-import { AuthService } from './core/providers/core.provider';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AuthService } from './core/providers';
 import { AuthInterface } from './core/interfaces/services/auth.interface';
 import { UserModel } from './core/models/user.model';
 import { Router } from '@angular/router';

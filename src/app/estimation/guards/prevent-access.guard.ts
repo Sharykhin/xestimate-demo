@@ -1,7 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
-import {CanActivate, Router} from '@angular/router';
-import {AuthService} from "../../core/providers/core.provider";
-import {AuthInterface} from "../../core/interfaces/services/auth.interface";
+import { CanActivate, Router} from '@angular/router';
+
+import { AuthService } from '../../core/providers';
+import { AuthInterface } from '../../core/interfaces/services/auth.interface';
 
 @Injectable()
 export class PreventAccessGuard implements CanActivate {

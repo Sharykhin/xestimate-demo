@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { DispatcherInterface } from "../interfaces/dispatcher.interface";
+import { DispatcherInterface } from '../interfaces/dispatcher.interface';
 
 @Injectable()
 export class CoreDispatcher implements DispatcherInterface {
@@ -12,12 +12,12 @@ export class CoreDispatcher implements DispatcherInterface {
         if (!this.listeners.hasOwnProperty(event)) {
             this.listeners[event] = [];
         }
-        let listeners = this.listeners[event];
+        const listeners = this.listeners[event];
         const len = listeners.push(callback);
         const index = len - 1;
         return () => {
             listeners.splice(index, 1);
-        }
+        };
     }
 
     dispatch(event: string, data?: any): void {
@@ -25,7 +25,7 @@ export class CoreDispatcher implements DispatcherInterface {
             this.listeners[event] = [];
         }
 
-        let listeners = this.listeners[event];
+        const listeners = this.listeners[event];
         listeners.forEach((callback) => {
             callback.apply(null, data);
         });

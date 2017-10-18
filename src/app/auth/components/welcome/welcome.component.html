@@ -20,7 +20,7 @@
                     </mat-autocomplete>
                 </mat-form-field>
                 <div>
-                    <button mat-button  matStepperNext>Next</button>
+                    <button mat-button (click)="addFocus()"  matStepperNext>Next</button>
                 </div>
             </form>
         </mat-step>
@@ -30,6 +30,7 @@
                 <mat-form-field>
                     <input matInput
                            placeholder="Address"
+                           #addressInput
                            [formControl]="secondFormGroup.controls.address"
                            required>
                     <mat-error *ngIf="secondFormGroup.controls.address.invalid">

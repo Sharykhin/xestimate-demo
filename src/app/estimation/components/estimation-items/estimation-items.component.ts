@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit, OnDestroy, ViewContainerRef, ViewChildren } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 
 import { ApiEstimationItemService, Dispatcher } from '../../../core/providers';
 import { ApiEstimationItemInterface } from '../../../core/interfaces/services/api-estimation-item.interface';
@@ -11,7 +10,6 @@ import { EVENTS } from '../../../core/services/events';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ModalRemoveEstimateComponent } from '../modals/remove-estimate/remove-estimate.component';
 import { ModalProcessEstimateComponent } from '../modals/process-estimate/process-estimate.component';
-import * as _ from '../../../core/utils';
 
 @Component({
     selector: 'app-estimation-items',
@@ -23,12 +21,7 @@ export class EstimationItemsComponent implements OnInit, OnDestroy {
     public items: EstimationItemModel[];
     public showSpinner = true;
     public todayDate: Date;
-    public uploadValue = 0;
-    public uploadingFile = false;
-
     private listener;
-
-    @ViewChildren('fileInput') fi;
 
     constructor(
         @Inject(ApiEstimationItemService) private apiItem: ApiEstimationItemInterface,
@@ -73,7 +66,7 @@ export class EstimationItemsComponent implements OnInit, OnDestroy {
         });
     }
 
-    editItem() {
+    editItem(item: EstimationItemModel) {
         this.toastr.success('Item has been edited!', 'Success!', {
             dismiss: 'click'
         });
@@ -84,7 +77,7 @@ export class EstimationItemsComponent implements OnInit, OnDestroy {
     }
 
     remove(item: EstimationItemModel, index: number): void {
-        let dialogRef = this.dialog.open(ModalRemoveEstimateComponent, {
+        const dialogRef = this.dialog.open(ModalRemoveEstimateComponent, {
             width: '250px',
             data: { name: item.description }
         });
@@ -101,7 +94,7 @@ export class EstimationItemsComponent implements OnInit, OnDestroy {
     }
 
     process(): void {
-        let dialogRef = this.dialog.open(ModalProcessEstimateComponent, {
+        const dialogRef = this.dialog.open(ModalProcessEstimateComponent, {
             width: '250px'
         });
 
@@ -109,54 +102,6 @@ export class EstimationItemsComponent implements OnInit, OnDestroy {
             if (result === true) {
                 this.router.navigate(['/estimation/suppliers']);
             }
-        });
-    }
-
-    openFileUpload(): void {
-        this.fi.first.nativeElement.click()
-    }
-
-    uploadFile(): void {
-        const file = this.fi.first.nativeElement.files[0];
-        this.uploadingFile = true;
-        // Simulate uploading process
-        setTimeout(() => {
-            this.uploadValue = 50;
-            setTimeout(() => {
-                this.uploadValue = 100;
-                setTimeout(() => {
-                    this.uploadingFile = false;
-                    this.uploadCallback();
-                }, 1000);
-            }, 1000);
-        }, 1000);
-    }
-
-    private uploadCallback() {
-
-        const model1 = new EstimationItemModel();
-        model1.id = _.guid();
-        model1.category = 'CAB';
-        model1.selector = 'CTFL+';
-        model1.description = 'Countertop - flad laid plastic laminate';
-        model1.unitType = 'LF';
-        model1.units = 8.00;
-        model1.cost = 40.09;
-
-        const model2 = new EstimationItemModel();
-        model2.id = _.guid();
-        model2.category = 'CAB';
-        model2.selector = 'CTPF';
-        model2.description = 'Countertop - post formed laminate';
-        model2.unitType = 'LF';
-        model2.units = 10.00;
-        model2.cost = 52.25;
-
-        Observable.forkJoin([
-            this.apiItem.save(model1, true),
-            this.apiItem.save(model2, true)
-        ]).subscribe(() => {
-            this.dispatcher.dispatch(EVENTS.FILE_MATERIALS_UPLOADED, [model1, model2]);
         });
     }
 }

@@ -3,7 +3,7 @@ import { NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as alasql from 'alasql';
 
-import { ApiEstimationItemService } from "../../../core/providers";
+import { ApiEstimationItemService } from '../../../core/providers';
 import { ApiEstimationItemInterface } from '../../../core/interfaces/services/api-estimation-item.interface';
 import { EstimationItemModel } from '../../../core/models/estimation-item.model';
 import { SupplierItemModel } from '../../../core/models/supplier-item.model';
@@ -77,23 +77,31 @@ export class SupplierItemsComponent implements OnInit {
 
     public convert(): void {
         this.submit = true;
+
         if (this.checkedTerms === false) {
             return;
         }
-        let data = [];
+
+        const data = [];
         this.convertItems.forEach((item) => {
             data.push({
-                a: item.description,
-                b: item.supplier,
-                c: item.price + '$'
+                description: item.description,
+                supplier: item.supplier,
+                price: item.price + '$'
             });
         });
 
-        var mystyle = {
-            headers:true,
-            column: {style:{Font:{Bold:'1'}}}
+        const mystyle = {
+            headers: true,
+            column: {
+                style: {
+                    Font: {
+                        Bold: '1'
+                    }
+                }
+            }
         };
-        alasql('SELECT * INTO XLSXML("tdts.xls",?) FROM ?',[mystyle, data]);
+        alasql('SELECT * INTO XLSXML("tdts.xls",?) FROM ?', [mystyle, data]);
     }
 
     public checkTermsAndConditions(value): void {

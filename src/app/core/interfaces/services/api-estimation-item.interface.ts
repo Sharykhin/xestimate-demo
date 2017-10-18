@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 
-import {EstimationItemModel} from "../../models/estimation-item.model";
+import { EstimationItemModel } from '../../models/estimation-item.model';
 
 export interface ApiEstimationItemInterface {
 

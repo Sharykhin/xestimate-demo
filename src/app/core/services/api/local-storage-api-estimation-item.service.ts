@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs';
+import { Observer } from 'rxjs/Observer';
 
 import { EstimationItemModel } from '../../models/estimation-item.model';
 import { EstimationItemRequest } from '../../interfaces/requests/estimation-item.request';
@@ -19,8 +19,8 @@ export class LocalStorageApiEstimationItem implements ApiEstimationItemInterface
 
     getItems(): Observable<EstimationItemModel[]> {
         return new Observable((observer: Observer<any>) => {
-            let items = window.localStorage.getItem(this.ITEMS_KEY);
-            let itemsArray = items !== null ? JSON.parse(items) : [];
+            const items = window.localStorage.getItem(this.ITEMS_KEY);
+            const itemsArray = items !== null ? JSON.parse(items) : [];
             itemsArray.forEach((index: number, item: EstimationItemRequest) => {
                 itemsArray[index] = this.itemFactory.createItem(item);
             });
@@ -32,8 +32,8 @@ export class LocalStorageApiEstimationItem implements ApiEstimationItemInterface
 
     save(item: EstimationItemModel, isNew: boolean): Observable<boolean> {
         return new Observable((observer: Observer<any>) => {
-            let items = window.localStorage.getItem(this.ITEMS_KEY);
-            let itemsArray = items !== null ? JSON.parse(items) : [];
+            const items = window.localStorage.getItem(this.ITEMS_KEY);
+            const itemsArray = items !== null ? JSON.parse(items) : [];
             if (isNew) {
                 itemsArray.push(item);
             } else {
@@ -51,8 +51,8 @@ export class LocalStorageApiEstimationItem implements ApiEstimationItemInterface
 
     remove(item: EstimationItemModel): Observable<boolean> {
         return new Observable((observer: Observer<any>) => {
-            let items = window.localStorage.getItem(this.ITEMS_KEY);
-            let itemsArray = items !== null ? JSON.parse(items) : [];
+            const items = window.localStorage.getItem(this.ITEMS_KEY);
+            const itemsArray = items !== null ? JSON.parse(items) : [];
             itemsArray.forEach((itemToCheck, i) => {
                 if (itemToCheck.id === item.id) {
                     itemsArray.splice(i, 1);
