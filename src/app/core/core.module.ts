@@ -4,12 +4,16 @@ import { AuthLocalStorageService } from './services/auth/auth-local-storage.serv
 import { DefaultUserFactory } from './factories/user/default-user.factory';
 import { AppValidators } from './services/validators';
 import { DefaultEstimationItemFacotry } from './factories/item/default-estimation-item.factory';
-import { EstimationItemFactory, ApiEstimationItemService, Dispatcher, AuthService, UserFactory } from './providers';
+import { DefaultSupplierItemFactory } from './factories/supplier-item/default-supplier-item.factory';
+import { EstimationItemFactory, ApiEstimationItemService, Dispatcher, AuthService, UserFactory, SupplierItemFactory } from './providers';
 import { LocalStorageApiEstimationItem } from './services/api/local-storage-api-estimation-item.service';
 import { CoreDispatcher } from './services/core-dispatcher';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
-    declarations: [],
+    declarations: [
+        NotFoundComponent
+    ],
     imports: [
 
     ],
@@ -26,6 +30,10 @@ import { CoreDispatcher } from './services/core-dispatcher';
         {
             provide: EstimationItemFactory,
             useClass: DefaultEstimationItemFacotry
+        },
+        {
+            provide: SupplierItemFactory,
+            useClass: DefaultSupplierItemFactory
         },
         {
             provide: ApiEstimationItemService,

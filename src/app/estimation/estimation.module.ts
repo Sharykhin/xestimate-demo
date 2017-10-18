@@ -15,12 +15,19 @@ import { ModalRemoveEstimateComponent } from './components/modals/remove-estimat
 import { ModalProcessEstimateComponent } from './components/modals/process-estimate/process-estimate.component';
 import { SupplierItemsComponent } from './components/supplier-items/supplier-items.component';
 import { EstimationUploadComponent } from './components/estimation-upload/estimation-upload.component';
+import { EstimationListComponent } from './components/estimation-list/estimation-list.component';
+import { GoToEstimationFormComponent } from './components/go-to-estimation-form/go-to-estimation-form.component';
+import { EstimationListPageComponent } from './components/estimation-list-page/estimation-list-page.component';
+import { EstimationEditPageComponent } from './components/estimation-edit-page/estimation-edit-page.component';
+import { EstimateItemResolver } from './resolvers/estimate-item.resolver';
+import { SupplierListComponent } from './components/supplier-list/supplier-list.component';
 
 
 @NgModule({
     declarations: [
         EstimationHomeComponent, EstimationItemsComponent, EstimationItemFormComponent, ModalRemoveEstimateComponent,
-        ModalProcessEstimateComponent, SupplierItemsComponent, EstimationUploadComponent
+        ModalProcessEstimateComponent, SupplierItemsComponent, EstimationUploadComponent, EstimationListComponent,
+        GoToEstimationFormComponent, EstimationListPageComponent, EstimationEditPageComponent, SupplierListComponent
     ],
     imports: [
         routing, CommonModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatButtonModule,
@@ -28,7 +35,8 @@ import { EstimationUploadComponent } from './components/estimation-upload/estima
         MatCheckboxModule
     ],
     providers: [
-        PreventAccessGuard
+        PreventAccessGuard,
+        EstimateItemResolver
     ],
     bootstrap: [ ModalRemoveEstimateComponent, ModalProcessEstimateComponent ]
 })

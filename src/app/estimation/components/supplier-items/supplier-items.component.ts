@@ -3,11 +3,11 @@ import { NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as alasql from 'alasql';
 
-import { ApiEstimationItemService } from '../../../core/providers';
+import { ApiEstimationItemService, SupplierItemFactory } from '../../../core/providers';
 import { ApiEstimationItemInterface } from '../../../core/interfaces/services/api-estimation-item.interface';
 import { EstimationItemModel } from '../../../core/models/estimation-item.model';
 import { SupplierItemModel } from '../../../core/models/supplier-item.model';
-
+import { SupplierItemFactoryInterface } from '../../../core/interfaces/factories/supplier-item-factory.interface';
 
 @Component({
     selector: 'app-supplier-items',
@@ -16,64 +16,34 @@ import { SupplierItemModel } from '../../../core/models/supplier-item.model';
 })
 export class SupplierItemsComponent implements OnInit {
 
-    public items: EstimationItemModel[];
-    public suppliers: NgModel[] = [];
     public typeConvert: NgModel;
     public checkedTerms = false;
     public submit = false;
-    public convertItems: SupplierItemModel[] = [];
-
-    readonly suppliersDesc = {
-        homedepot: {
-            name: 'Home Depot',
-            delta: '1.4'
-        },
-        lowers: {
-            name: 'Lowers',
-            delta: '1.3'
-        },
-        menards: {
-            name: 'Menards',
-            delta: '1.2'
-        }
-    };
+    public items: SupplierItemModel[];
 
     constructor(
         @Inject(ApiEstimationItemService) private apiItem: ApiEstimationItemInterface,
-        @Inject(Router) private router: Router
-    ) {
-    }
+        @Inject(Router) private router: Router,
+        @Inject(SupplierItemFactory) private supplierItemFactory: SupplierItemFactoryInterface
+    ) { }
 
     ngOnInit() {
         this.apiItem.getItems()
             .subscribe((items: EstimationItemModel[]) => {
-                this.items = items;
-                this.items.forEach((item: EstimationItemModel, index) => {
-                    const model = new SupplierItemModel();
-                    model.description = item.description;
-                    model.supplier = '';
-                    this.convertItems[index] = model;
+                this.items = [];
+                items.forEach((item: EstimationItemModel) => {
+                    const model = this.supplierItemFactory.createItem({
+                        category: item.category,
+                        selector: item.selector,
+                        description: item.description,
+                        units: item.units,
+                        cost: item.cost
+                    });
+                    this.items.push(model);
                 });
             });
     }
 
-    public back() {
-        this.router.navigate(['/estimation']);
-    }
-
-    public calculateCost(supplierKey: string, item: EstimationItemModel): string {
-        if (supplierKey === undefined) {
-            return 'Not Specified';
-        }
-        const supplierDelta = this.suppliersDesc[supplierKey].delta;
-        return ((item.cost * item.units) * supplierDelta).toFixed(2);
-    }
-
-    public applySuplier(supplierKey: string, index: number, item: EstimationItemModel) {
-        const supplierName = this.suppliersDesc[supplierKey].name;
-        this.convertItems[index].supplier = supplierName;
-        this.convertItems[index].price = this.calculateCost(supplierKey, item);
-    }
 
     public convert(): void {
         this.submit = true;
@@ -83,7 +53,7 @@ export class SupplierItemsComponent implements OnInit {
         }
 
         const data = [];
-        this.convertItems.forEach((item) => {
+        this.items.forEach((item) => {
             data.push({
                 description: item.description,
                 supplier: item.supplier,

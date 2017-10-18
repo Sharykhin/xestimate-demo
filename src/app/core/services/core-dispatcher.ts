@@ -29,6 +29,5 @@ export class CoreDispatcher implements DispatcherInterface {
         listeners.forEach((callback) => {
             callback.apply(null, data);
         });
-
     }
 }

@@ -45,9 +45,9 @@
                     placeholder="Enter Unit type"
                     required
                     [formControl]="itemForm.controls.unitType">
-                <mat-option value="sf">SF</mat-option>
-                <mat-option value="ea">EA</mat-option>
-                <mat-option value="lf">LF</mat-option>
+                <mat-option value="SF">SF</mat-option>
+                <mat-option value="EA">EA</mat-option>
+                <mat-option value="LF">LF</mat-option>
             </mat-select>
             <mat-hint align="end">Use one of unit measure</mat-hint>
             <mat-error *ngIf="itemForm.controls.unitType.invalid && submitted">
@@ -80,6 +80,6 @@
         </mat-form-field>
 
         <button style="margin-top: 40px" mat-raised-button [color]="'primary'">Submit</button>
-        <button *ngIf="!isNew" (click)="cancel()" mat-raised-button>Cancel</button>
+        <button *ngIf="!isNew && !hideCancel" (click)="cancel()" mat-raised-button>Cancel</button>
     </form>
 </div>

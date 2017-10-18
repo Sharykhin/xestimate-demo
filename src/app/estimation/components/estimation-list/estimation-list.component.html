@@ -1,0 +1,55 @@
+<div class="item-list">
+    <div class="spinner" *ngIf="showSpinner">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="list fixed-table-container">
+        <h3 *ngIf="items.length === 0">There are no items yet.</h3>
+        <table class="table table-striped"  *ngIf="items.length > 0">
+            <thead>
+            <tr>
+                <td>
+                    Category
+                </td>
+                <td>
+                    Selector
+                </td>
+                <td>
+                    Description
+                </td>
+                <td>
+                    Units
+                </td>
+                <td>
+                    Cost
+                </td>
+                <td>
+
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of items; let i = index">
+                <td>
+                    {{ item.category }}
+                </td>
+                <td>
+                    {{ item.selector }}
+                </td>
+                <td>
+                    {{ item.description }}
+                </td>
+                <td>
+                    {{ item.units }} {{ item.unitType }}
+                </td>
+                <td>
+                    {{ item.cost }}$ per {{ item.unitType }}
+                </td>
+                <td>
+                    <button (click)="edit(item)" mat-button>Edit</button>
+                    <button (click)="remove(item, i)" mat-button [color]="'warn'">Remove</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

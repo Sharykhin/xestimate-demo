@@ -1,6 +1,6 @@
 import {
     Component, OnInit, Input, Output, EventEmitter, Inject, ViewChildren, AfterViewInit,
-    OnDestroy, ViewChild
+    OnDestroy, ViewChild, ChangeDetectorRef
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -22,6 +22,7 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
 
     // TODO: it would work if form is used on separate page, but not with the list
     @Input() item: EstimationItemModel;
+    @Input() hideCancel: boolean;
     @Output() onSave = new EventEmitter<EstimationItemModel>();
     @Output() onEdit = new EventEmitter<EstimationItemModel>();
 
@@ -38,7 +39,8 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
         @Inject(AppValidators) private validators: AppValidators,
         @Inject(EstimationItemFactory) private itemFactory: EstimationItemFactoryInterface,
         @Inject(ApiEstimationItemService) private apiItem: ApiEstimationItemInterface,
-        @Inject(Dispatcher) private dispatcher: DispatcherInterface
+        @Inject(Dispatcher) private dispatcher: DispatcherInterface,
+        private pizda: ChangeDetectorRef
     ) {}
 
     ngOnInit() {
@@ -75,9 +77,9 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
         // EstimationItemFormComponent.html:3
         // ERROR Error: ExpressionChangedAfterItHasBeenCheckedError:
         // Expression has changed after it was checked. Previous value: 'false'. Current value: 'true'
-        setTimeout(() => {
-            this.vc.first.nativeElement.focus();
-        }, 0);
+        // setTimeout(() => {
+        //     this.vc.first.nativeElement.focus();
+        // }, 0);
     }
 
     onSubmit(values: EstimationItemRequest): void {
@@ -110,8 +112,6 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
     }
 
     cancel(): void {
-        this.itemForm.markAsPending();
-        this.itemForm.markAsUntouched();
         this.resetForm();
         this.submitted = false;
         this.item = this.itemFactory.createItem({});
@@ -120,15 +120,15 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
 
     private buildForm(): void {
         this.itemForm = this.formBuilder.group({
-            category: [ '', Validators.required ],
-            selector: [ '', Validators.required ],
-            description: [ '', Validators.required ],
-            unitType: ['', Validators.compose([
+            category: [ this.item ? this.item.category : '', Validators.required ],
+            selector: [ this.item ? this.item.selector : '', Validators.required ],
+            description: [ this.item ? this.item.description : '', Validators.required ],
+            unitType: [this.item ? this.item.unitType : '', Validators.compose([
                 Validators.required,
                 this.validators.unitType
             ])],
-            units: ['', Validators.required ],
-            cost: ['', Validators.required ]
+            units: [this.item ? this.item.units : '', Validators.required ],
+            cost: [this.item ? this.item.cost : '', Validators.required ]
         });
     }
 
@@ -137,14 +137,16 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
             if (this.itemForm.controls.hasOwnProperty(name)) {
                 this.itemForm.controls[name].setErrors(null);
                 this.itemForm.controls[name].setValue('');
+                // Need to mark as untouched to show default validation of material.
                 this.itemForm.controls[name].markAsUntouched();
             }
         }
 
+        // By some reasons without delayed call it doesn't work.
         setTimeout(() => {
             this.formView.nativeElement.querySelectorAll('mat-form-field').forEach((formElement) => {
                 formElement.classList.remove('mat-form-field-invalid');
             });
-        });
+        }, 0);
     }
 }

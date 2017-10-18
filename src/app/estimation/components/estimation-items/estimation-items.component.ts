@@ -8,7 +8,6 @@ import { EstimationItemModel } from '../../../core/models/estimation-item.model'
 import { DispatcherInterface } from '../../../core/interfaces/dispatcher.interface';
 import { EVENTS } from '../../../core/services/events';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { ModalRemoveEstimateComponent } from '../modals/remove-estimate/remove-estimate.component';
 import { ModalProcessEstimateComponent } from '../modals/process-estimate/process-estimate.component';
 
 @Component({
@@ -49,7 +48,7 @@ export class EstimationItemsComponent implements OnInit, OnDestroy {
                 this.items.push(item);
             });
 
-            this.toastr.success('Two items were uploaded!', 'Success!', {
+            this.toastr.success('Two items were uploaded!', null, {
                 dismiss: 'click',
                 toastLife: 3000
             });
@@ -60,43 +59,26 @@ export class EstimationItemsComponent implements OnInit, OnDestroy {
         this.listener();
     }
 
-    addItem(item: EstimationItemModel): void {
+    public addItem(item: EstimationItemModel): void {
         this.items.push(item);
-        this.toastr.success('A new item has been added!', 'Success!', {
+        this.toastr.success('A new item has been added!', null, {
             dismiss: 'click',
             toastLife: 3000
         });
     }
 
-    editItem(item: EstimationItemModel) {
-        this.toastr.success('Item has been edited!', 'Success!', {
+    public editItem(item: EstimationItemModel) {
+        this.toastr.success('Item has been edited!', null, {
             dismiss: 'click',
             toastLife: 3000
         });
     }
 
-    edit(item: EstimationItemModel): void {
+    public edit(item: EstimationItemModel): void {
         this.dispatcher.dispatch(EVENTS.EDIT_ITEM, [item]);
     }
 
-    remove(item: EstimationItemModel, index: number): void {
-        const dialogRef = this.dialog.open(ModalRemoveEstimateComponent, {
-            width: '250px',
-            data: { name: item.description }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-           if (result === true) {
-               this.apiItem.remove(item).
-                   subscribe(() => {
-                   this.items.splice(index, 1);
-                   this.toastr.info('Item has been removed.');
-               });
-           }
-        });
-    }
-
-    process(): void {
+    public process(): void {
         const dialogRef = this.dialog.open(ModalProcessEstimateComponent, {
             width: '250px'
         });

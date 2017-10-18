@@ -21,11 +21,37 @@ export class LocalStorageApiEstimationItem implements ApiEstimationItemInterface
         return new Observable((observer: Observer<any>) => {
             const items = window.localStorage.getItem(this.ITEMS_KEY);
             const itemsArray = items !== null ? JSON.parse(items) : [];
-            itemsArray.forEach((index: number, item: EstimationItemRequest) => {
+            itemsArray.forEach((item: EstimationItemRequest, index: number) => {
                 itemsArray[index] = this.itemFactory.createItem(item);
             });
 
             observer.next(itemsArray);
+            observer.complete();
+        });
+    }
+
+    getItem(id: string): Observable<EstimationItemModel> {
+        return new Observable((observer: Observer<any>) => {
+            const items = window.localStorage.getItem(this.ITEMS_KEY);
+            const itemsArray = items !== null ? JSON.parse(items) : [];
+            let itemToSearch = null;
+            try {
+                itemsArray.forEach((item: EstimationItemRequest) => {
+                    if (item.id === id) {
+                        itemToSearch = item;
+                        throw new Error('exit loop');
+                    }
+                });
+            } catch (e) {}
+
+            if (itemToSearch === null) {
+                observer.error({
+                    code: 404,
+                    message: 'Not found'
+                });
+            } else {
+                observer.next(itemToSearch);
+            }
             observer.complete();
         });
     }

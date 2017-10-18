@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
@@ -10,8 +10,4 @@ export class ModalProcessEstimateComponent {
     constructor(
         public dialogRef: MatDialogRef<ModalProcessEstimateComponent>
     ) {}
-
-    onNoClick(): void {
-        this.dialogRef.close();
-    }
 }

@@ -1,0 +1,46 @@
+<table class="table table-striped" >
+    <thead>
+    <tr>
+        <td>
+            Category
+        </td>
+        <td>
+            Selector
+        </td>
+        <td>
+            Description
+        </td>
+        <td>
+            Supplier
+        </td>
+        <td>
+            Final cost
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items; let i = index">
+        <td>
+            {{ item.category }}
+        </td>
+        <td>
+            {{ item.selector }}
+        </td>
+        <td>
+            {{ item.description }}
+        </td>
+        <td>
+            <mat-form-field>
+                <mat-select placeholder="Select" name="supplier[]" (change)="applySuplier(suppliers[i], item)" required [(ngModel)]="suppliers[i]">
+                    <mat-option value="homedepot">In Home Depot</mat-option>
+                    <mat-option value="lowers">In Lowers </mat-option>
+                    <mat-option value="menards">In Menards</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+        <td>
+            {{ calculateCost(suppliers[i], item)}} <span *ngIf="suppliers[i]">$</span>
+        </td>
+    </tr>
+    </tbody>
+</table>

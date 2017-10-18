@@ -17,59 +17,12 @@
         <div>
             <h2 class="list-title">Material List
                 <sub>
-                    After compliting filling out all the items, please press to "Process Materials" to find specific items from suppliers.
+                    After completing filling out all the items, please press to "Process Materials" to find specific items from suppliers.
                 </sub>
             </h2>
             <button (click)="process()" mat-raised-button [color]="'primary'">Process Materials</button>
         </div>
 
-        <h3 *ngIf="items.length === 0">There are no items yet.</h3>
-        <table class="table table-striped"  *ngIf="items.length > 0">
-            <thead>
-                <tr>
-                    <td>
-                        Category
-                    </td>
-                    <td>
-                        Selector
-                    </td>
-                    <td>
-                        Description
-                    </td>
-                    <td>
-                        Units
-                    </td>
-                    <td>
-                        Cost
-                    </td>
-                    <td>
-
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of items; let i = index">
-                    <td>
-                        {{ item.category }}
-                    </td>
-                    <td>
-                        {{ item.selector }}
-                    </td>
-                    <td>
-                        {{ item.description }}
-                    </td>
-                    <td>
-                        {{ item.units }} {{ item.unitType }}
-                    </td>
-                    <td>
-                        {{ item.cost }}$ per {{ item.unitType }}
-                    </td>
-                    <td>
-                        <button (click)="edit(item)" mat-button>Edit</button>
-                        <button (click)="remove(item, i)" mat-button [color]="'warn'">Remove</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <app-estimation-list (onEdit)="edit($event)"></app-estimation-list>
     </div>
 </div>
