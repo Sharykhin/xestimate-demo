@@ -26,3 +26,7 @@
     float: right;
 }
 
+.item-list .spinner {
+    width: 100px;
+    margin: 20px auto 0;
+}

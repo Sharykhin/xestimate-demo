@@ -87,6 +87,7 @@ export class EstimationItemFormComponent implements OnInit, AfterViewInit, OnDes
         if (this.itemForm.invalid) {
             return;
         }
+
         this.item.category = values.category;
         this.item.selector = values.selector;
         this.item.description = values.description;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewContainerRef, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Inject, ViewContainerRef, Output, EventEmitter, Input} from '@angular/core';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { MatDialog } from '@angular/material';
 
@@ -15,9 +15,7 @@ import { ModalRemoveEstimateComponent } from '../modals/remove-estimate/remove-e
 export class EstimationListComponent implements OnInit {
 
     @Output() onEdit = new EventEmitter<EstimationItemModel>();
-
-    public showSpinner: boolean = true;
-    public items: EstimationItemModel[];
+    @Input() items: EstimationItemModel[];
 
     constructor(
        @Inject(ApiEstimationItemService) private apiItem: ApiEstimationItemInterface,
@@ -29,11 +27,7 @@ export class EstimationListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.apiItem.getItems()
-            .subscribe((items: EstimationItemModel[]) => {
-                this.items = items;
-                this.showSpinner = false;
-            });
+
     }
 
     public edit(item: EstimationItemModel): void {

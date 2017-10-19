@@ -1,7 +1,4 @@
 <div class="item-list">
-    <div class="spinner" *ngIf="showSpinner">
-        <mat-spinner></mat-spinner>
-    </div>
     <div class="list fixed-table-container">
         <h3 *ngIf="items.length === 0">There are no items yet.</h3>
         <table class="table table-striped"  *ngIf="items.length > 0">
